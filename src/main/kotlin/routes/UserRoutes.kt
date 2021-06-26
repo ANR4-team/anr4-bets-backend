@@ -10,5 +10,9 @@ fun Routing.userRoutes() {
         call.respond("Hello")
     }
 
+    get("/cock") {
+        call.respond("YEP")
+    }
+
     // todo: declare routes here
 }
