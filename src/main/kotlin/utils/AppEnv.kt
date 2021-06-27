@@ -4,9 +4,11 @@ object AppEnv {
 
     fun getDatabaseUrl(): String = System.getenv("DATABASE_URL")
 
-    val isTest = System.getenv("TEST") != null
+    private val envType: String = System.getenv("ENV")
 
-    val isProd = !isTest
+    val isTest: Boolean = envType == "TEST"
+
+    val isProd: Boolean = envType == "PROD"
 
     object JWT {
         val secret: String = System.getenv("JWT_SECRET")

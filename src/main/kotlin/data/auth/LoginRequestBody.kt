@@ -1,12 +1,10 @@
 package data.auth
 
-import io.ktor.auth.*
-
-data class User(
+data class LoginRequestBody(
     val id: String,
     val name: String,
     val profileImageUrl: String,
-) : Principal {
+) {
 
     companion object {
         fun example(): Map<String, Any> {

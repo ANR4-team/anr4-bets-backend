@@ -8,7 +8,8 @@ import de.nielsfalk.ktor.swagger.swaggerUi
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.locations.*
-import io.ktor.routing.*
+import io.ktor.routing.Route
+import io.ktor.routing.application
 import io.ktor.util.pipeline.*
 import utils.getUser
 

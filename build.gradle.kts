@@ -90,7 +90,6 @@ tasks.register("stage") {
 
 tasks.withType(KotlinCompile::class.java).all {
     kotlinOptions.jvmTarget = "1.8"
-    kotlinOptions.freeCompilerArgs += "-Xuse-experimental=io.ktor.util.KtorExperimentalAPI"
     kotlinOptions.freeCompilerArgs += "-Xuse-experimental=io.ktor.util.InternalAPI"
     kotlinOptions.freeCompilerArgs += "-Xuse-experimental=kotlin.ExperimentalStdlibApi"
     kotlinOptions.freeCompilerArgs += "-Xinline-classes"
