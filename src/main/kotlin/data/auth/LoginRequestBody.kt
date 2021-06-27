@@ -1,13 +1,17 @@
 package data.auth
 
 data class LoginRequestBody(
-    val token: String
+    val id: String,
+    val name: String,
+    val profileImageUrl: String,
 ) {
 
     companion object {
         fun example(): Map<String, Any> {
             return mapOf(
-                "token" to "moqmewnfqwnufunqwufqwubf92r982bn-i-dont-know-google-token-or-some-shit",
+                "id" to "228322000",
+                "name" to "truetripled",
+                "profileImageUrl" to "https://example.com/pic.png",
             )
         }
     }

@@ -1,8 +1,8 @@
 package routes
 
 import data.auth.LoginRequestBody
+import data.auth.LoginResponse
 import data.auth.User
-import data.auth.UserModel
 import de.nielsfalk.ktor.swagger.responds
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -23,12 +23,11 @@ fun Routing.userRoutes() {
         "Login for Google user"
             .sample<LoginRequestBody>(LoginRequestBody.example())
             .responds(
-                okWithExample<UserModel>(UserModel.example()),
+                okWithExample<LoginResponse>(LoginResponse.example()),
                 badRequest(),
-                unauthorized(),
             )
-    ) { _, (token) ->
-        val result = userService.loginUser(token)
+    ) { _, body ->
+        val result = userService.loginUser(body)
         call.respondService(result)
     }
 

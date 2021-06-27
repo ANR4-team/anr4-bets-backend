@@ -15,6 +15,4 @@ object AppEnv {
         val issuer: String = System.getenv("JWT_ISSUER")
         val realm: String = System.getenv("JWT_REALM")
     }
-
-    val firebaseConfig: String = System.getenv("FIREBASE_CONFIG")
 }

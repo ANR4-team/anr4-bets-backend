@@ -23,15 +23,12 @@ import swagger.installSwagger
 import utils.AppEnv
 import utils.JwtConfig
 import utils.features.DatabaseFeature
-import utils.setupFirebaseApp
 import java.time.LocalDateTime
 
 fun main(args: Array<String>) = EngineMain.main(args)
 
 @Suppress("unused")
 fun Application.module() {
-
-    setupFirebaseApp()
 
     install(CallLogging) {
         level = Level.INFO

@@ -56,8 +56,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 
     implementation("com.github.nielsfalk:ktor-swagger:0.7.0")
-
-    implementation("com.google.firebase:firebase-admin:7.3.0")
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src/main/kotlin")

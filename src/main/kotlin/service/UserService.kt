@@ -1,8 +1,7 @@
 package service
 
-import com.google.firebase.auth.FirebaseAuth
-import data.auth.UserModel
-import io.ktor.http.*
+import data.auth.LoginRequestBody
+import data.auth.LoginResponse
 import repository.UserRepository
 import utils.*
 
@@ -10,21 +9,13 @@ class UserService(
     private val userRepository: UserRepository,
 ) {
 
-    private val firebaseAuth: FirebaseAuth
-        get() = FirebaseAuth.getInstance()
-
-    suspend fun loginUser(idToken: String): ServiceResult<UserModel> {
-        val verifiedToken = firebaseAuth.verifyToken(idToken)
-            ?: return Error.Custom("Couldn\'t verify this token", HttpStatusCode.Unauthorized).error()
-        val uid = verifiedToken.uid
-        val googleUser = firebaseAuth.getGoogleUser(uid)
-            ?: return Error.Custom("Couldn\'t get data about user", HttpStatusCode.Unauthorized).error()
-        val user = if (userRepository.getUser(uid) == null) {
-            userRepository.createUser(uid, googleUser.displayName, googleUser.photoUrl)
+    suspend fun loginUser(requestBody: LoginRequestBody): ServiceResult<LoginResponse> {
+        if (userRepository.getUser(requestBody.id) == null) {
+            userRepository.createUser(requestBody.id, requestBody.name, requestBody.profileImageUrl)
         } else {
-            userRepository.updateUser(uid, googleUser.displayName, googleUser.photoUrl)
+            userRepository.updateUser(requestBody.id, requestBody.name, requestBody.profileImageUrl)
         } ?: return Error.Unknown.error()
-        val jwtToken = JwtConfig.makeAccessToken(uid)
-        return UserModel(user, jwtToken).success()
+        val jwtToken = JwtConfig.makeAccessToken(requestBody.id)
+        return LoginResponse(jwtToken).success()
     }
 }
