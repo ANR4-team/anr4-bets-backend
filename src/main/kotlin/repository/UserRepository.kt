@@ -37,4 +37,16 @@ class UserRepository(database: Database) : BaseRepository(database) {
             }.resultedValues?.singleOrNull()?.toUser()
         }
     }
+
+    suspend fun updateUser(id: String, name: String, profileUrl: String): User? {
+        return dbCall {
+            Users.update({ Users.id eq id }) {
+                it[Users.name] = name
+                it[profileImageUrl] = profileUrl
+            }
+            Users.select { Users.id eq id }
+                .singleOrNull()
+                ?.toUser()
+        }
+    }
 }

@@ -19,9 +19,11 @@ class UserService(
         val uid = verifiedToken.uid
         val googleUser = firebaseAuth.getGoogleUser(uid)
             ?: return Error.Custom("Couldn\'t get data about user", HttpStatusCode.Unauthorized).error()
-        val user = userRepository.getUser(uid)
-            ?: userRepository.createUser(uid, googleUser.displayName, googleUser.photoUrl)
-            ?: return Error.Unknown.error()
+        val user = if (userRepository.getUser(uid) == null) {
+            userRepository.createUser(uid, googleUser.displayName, googleUser.photoUrl)
+        } else {
+            userRepository.updateUser(uid, googleUser.displayName, googleUser.photoUrl)
+        } ?: return Error.Unknown.error()
         val jwtToken = JwtConfig.makeAccessToken(uid)
         return UserModel(user, jwtToken).success()
     }
