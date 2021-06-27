@@ -15,4 +15,6 @@ object AppEnv {
     }
 
     val firebaseConfigFilename: String = System.getenv("FIREBASE_CONFIG_FILE_NAME")
+
+    val firebaseConfig: String = System.getenv("FIREBASE_CONFIG")
 }

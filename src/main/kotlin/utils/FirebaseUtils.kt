@@ -15,7 +15,11 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 fun Application.setupFirebaseApp() {
-    val serviceAccount = this.javaClass.classLoader.getResourceAsStream(AppEnv.firebaseConfigFilename)
+    val serviceAccount = if (AppEnv.isTest) {
+        this.javaClass.classLoader.getResourceAsStream(AppEnv.firebaseConfigFilename)
+    } else {
+        AppEnv.firebaseConfig.byteInputStream()
+    }
     val options = FirebaseOptions.builder()
         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
         .build()
