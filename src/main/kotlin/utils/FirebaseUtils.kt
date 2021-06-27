@@ -16,7 +16,7 @@ import kotlin.coroutines.suspendCoroutine
 
 fun Application.setupFirebaseApp() {
     val serviceAccount = if (AppEnv.isTest) {
-        this.javaClass.classLoader.getResourceAsStream(AppEnv.firebaseConfigFilename)
+        this.javaClass.classLoader.getResourceAsStream(AppEnv.firebaseConfig)
     } else {
         AppEnv.firebaseConfig.byteInputStream()
     }

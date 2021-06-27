@@ -4,17 +4,17 @@ object AppEnv {
 
     fun getDatabaseUrl(): String = System.getenv("DATABASE_URL")
 
-    val isTest: Boolean = System.getenv("TEST") != null
+    private val envType: String = System.getenv("ENV")
 
-    val isProd: Boolean = !isTest
+    val isTest: Boolean = envType == "TEST"
+
+    val isProd: Boolean = envType == "PROD"
 
     object JWT {
         val secret: String = System.getenv("JWT_SECRET")
         val issuer: String = System.getenv("JWT_ISSUER")
         val realm: String = System.getenv("JWT_REALM")
     }
-
-    val firebaseConfigFilename: String = System.getenv("FIREBASE_CONFIG_FILE_NAME")
 
     val firebaseConfig: String = System.getenv("FIREBASE_CONFIG")
 }
