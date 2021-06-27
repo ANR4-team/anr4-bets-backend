@@ -7,7 +7,9 @@ import de.nielsfalk.ktor.swagger.Metadata
 import de.nielsfalk.ktor.swagger.swaggerUi
 import io.ktor.application.*
 import io.ktor.http.HttpMethod
-import io.ktor.routing.*
+import io.ktor.locations.*
+import io.ktor.routing.Route
+import io.ktor.routing.application
 import io.ktor.util.pipeline.*
 import utils.getBody
 import utils.getUser

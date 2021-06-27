@@ -27,6 +27,7 @@ fun Routing.userRoutes() {
                 badRequest(),
             )
     ) { _, body ->
+        println("qwe")
         val result = userService.loginUser(body)
         call.respondService(result)
     }
