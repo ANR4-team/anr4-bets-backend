@@ -7,6 +7,10 @@ import io.ktor.locations.*
 object Routes {
 
     @Group("user")
+    @Location("/login")
+    object Login
+
+    @Group("user")
     @Location("/user")
     object User
 }

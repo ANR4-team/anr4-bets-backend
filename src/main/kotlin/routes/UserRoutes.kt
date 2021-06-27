@@ -1,18 +1,48 @@
 package routes
 
+import data.auth.LoginRequestBody
+import data.auth.User
+import data.auth.UserModel
+import de.nielsfalk.ktor.swagger.responds
 import io.ktor.application.*
+import io.ktor.auth.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import org.koin.ktor.ext.inject
+import service.UserService
+import swagger.*
+import swagger.methods.get
+import swagger.methods.postNoAuth
+import utils.respondService
 
 fun Routing.userRoutes() {
 
-    get("/") {
-        call.respond("Hello")
+    val userService by inject<UserService>()
+
+    postNoAuth<Routes.Login, LoginRequestBody>(
+        "Login for Google user"
+            .sample<LoginRequestBody>(LoginRequestBody.example())
+            .responds(
+                okWithExample<UserModel>(UserModel.example()),
+                badRequest(),
+                unauthorized(),
+            )
+    ) { _, (token) ->
+        val result = userService.loginUser(token)
+        call.respondService(result)
     }
 
-    get("/cock") {
-        call.respond("YEP")
-    }
+    authenticate {
 
-    // todo: declare routes here
+        get<Routes.User>(
+            "Get user info"
+                .noSecurity()
+                .responds(
+                    okWithExample<User>(User.example()),
+                    unauthorized(),
+                )
+        ) { _, user ->
+            call.respond(user)
+        }
+    }
 }

@@ -56,6 +56,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 
     implementation("com.github.nielsfalk:ktor-swagger:0.7.0")
+
+    implementation("com.google.firebase:firebase-admin:7.3.0")
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src/main/kotlin")
@@ -90,7 +92,6 @@ tasks.register("stage") {
 
 tasks.withType(KotlinCompile::class.java).all {
     kotlinOptions.jvmTarget = "1.8"
-    kotlinOptions.freeCompilerArgs += "-Xuse-experimental=io.ktor.util.KtorExperimentalAPI"
     kotlinOptions.freeCompilerArgs += "-Xuse-experimental=io.ktor.util.InternalAPI"
     kotlinOptions.freeCompilerArgs += "-Xuse-experimental=kotlin.ExperimentalStdlibApi"
     kotlinOptions.freeCompilerArgs += "-Xinline-classes"

@@ -20,7 +20,9 @@ fun Application.installSwagger() {
                 Date pattern: "yyyy-MM-dd'T'HH:mm:ssZ"
             """.trimIndent()
             )
-            openApi = OpenApi()
+            openApi = OpenApi().apply {
+                security = listOf(mapOf("Bearer" to listOf("TOKEN")))
+            }
         }
     }
 }

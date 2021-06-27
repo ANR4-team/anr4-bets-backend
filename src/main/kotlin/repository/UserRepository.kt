@@ -10,7 +10,8 @@ class UserRepository(database: Database) : BaseRepository(database) {
     suspend fun getUser(id: String): User? {
         return dbCall {
             Users.select { Users.id eq id }
-                .singleOrNull()?.toUser()
+                .singleOrNull()
+                ?.toUser()
         }
     }
 
@@ -20,10 +21,20 @@ class UserRepository(database: Database) : BaseRepository(database) {
         }
     }
 
-    suspend fun getUserIdByLogin(login: String): String? = dbCall {
-        Users.slice(Users.id, Users.login)
-            .select { Users.login eq login }
+    suspend fun getUserByName(name: String): User? = dbCall {
+        Users.select { Users.name eq name }
             .limit(1)
-            .singleOrNull()?.let { it[Users.id] }
+            .singleOrNull()
+            ?.toUser()
+    }
+
+    suspend fun createUser(id: String, name: String, profileUrl: String): User? {
+        return dbCall {
+            Users.insert {
+                it[Users.id] = id
+                it[Users.name] = name
+                it[profileImageUrl] = profileUrl
+            }.resultedValues?.singleOrNull()?.toUser()
+        }
     }
 }
