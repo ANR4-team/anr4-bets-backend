@@ -11,3 +11,10 @@ fun ResultRow.toUser(): User {
         this[Users.profileImageUrl],
     )
 }
+
+fun ResultRow.toSportType(): SportType {
+    return SportType(
+        this[SportTypes.id],
+        this[SportTypes.name],
+    )
+}

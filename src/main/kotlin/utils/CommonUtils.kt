@@ -58,3 +58,12 @@ fun String.capitalize(): String {
 fun String.lowercase(): String {
     return lowercase(Locale.getDefault())
 }
+
+inline fun <T> tryOrNull(block: () -> T?): T? {
+    return try {
+        block()
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
+}

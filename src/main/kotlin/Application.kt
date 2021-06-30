@@ -1,4 +1,5 @@
 import data.adapters.LocalDateTimeAdapter
+import data.adapters.UuidAdapter
 import db.tables
 import di.appModule
 import di.repositoryModule
@@ -7,12 +8,14 @@ import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.auth.jwt.*
 import io.ktor.features.*
+import io.ktor.features.DataConversion
 import io.ktor.gson.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.server.netty.*
+import io.ktor.util.converters.*
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.koin.ktor.ext.Koin
 import org.koin.ktor.ext.inject
@@ -23,7 +26,9 @@ import swagger.installSwagger
 import utils.AppEnv
 import utils.JwtConfig
 import utils.features.DatabaseFeature
+import utils.tryOrNull
 import java.time.LocalDateTime
+import java.util.*
 
 fun main(args: Array<String>) = EngineMain.main(args)
 
@@ -92,6 +97,22 @@ fun Application.module() {
     install(ContentNegotiation) {
         gson {
             registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeAdapter())
+            registerTypeAdapter(UUID::class.java, UuidAdapter())
+        }
+    }
+
+    install(DataConversion) {
+        convert<UUID> {
+            decode { values, _ ->
+                values.singleOrNull()?.let { tryOrNull { UUID.fromString(it) } }
+            }
+            encode { value ->
+                when (value) {
+                    null -> listOf()
+                    is UUID -> listOf(value.toString())
+                    else -> throw DataConversionException("Cannot convert $value")
+                }
+            }
         }
     }
 
@@ -100,5 +121,6 @@ fun Application.module() {
             call.respond("Server is powered by Ktor 1.6.0")
         }
         userRoutes()
+        sportTypesRoutes()
     }
 }
