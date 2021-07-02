@@ -25,16 +25,16 @@ fun Routing.sportTypesRoutes() {
         get<Routes.SportType>(
             "Get all sport types"
                 .responds(
-                    okWithListExample<SportType>(SportType.example()),
+                    okWithListExample<SportType>(),
                     unauthorized(),
                 )
         ) { _, _ -> call.respondService(sportTypeService.getAllSportTypes()) }
 
         post<Routes.SportType, SportTypeBody>(
             "Create new sport type"
-                .sample<SportTypeBody>(SportTypeBody.example())
+                .requestBodyExample<SportTypeBody>()
                 .responds(
-                    okWithExample<SportType>(SportType.example()),
+                    okWithExample<SportType>(),
                     unauthorized(),
                     badRequest(),
                     conflict(),
@@ -43,9 +43,9 @@ fun Routing.sportTypesRoutes() {
 
         put<Routes.SportType.WithId, SportTypeBody>(
             "Rename sport type"
-                .sample<SportTypeBody>(SportTypeBody.example())
+                .requestBodyExample<SportTypeBody>()
                 .responds(
-                    okWithExample<SportType>(SportType.example()),
+                    okWithExample<SportType>(),
                     unauthorized(),
                     badRequest(),
                     notFound<SportType>(),

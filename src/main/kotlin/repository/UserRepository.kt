@@ -1,31 +1,29 @@
 package repository
 
-import data.*
 import data.auth.User
 import db.Users
 import org.jetbrains.exposed.sql.*
 
-class UserRepository(database: Database) : BaseRepository(database) {
+class UserRepository(database: Database) : ExposedRepository<Users, User>(database) {
+
+    override val table = Users
+
+    override fun ResultRow.convert(): User {
+        return User(
+            this[Users.id],
+            this[Users.name],
+            this[Users.profileImageUrl],
+        )
+    }
 
     suspend fun getUser(id: String): User? {
         return dbCall {
-            Users.select { Users.id eq id }
-                .singleOrNull()
-                ?.toUser()
-        }
-    }
-
-    suspend fun getUsers(): List<User>? {
-        return dbCall {
-            Users.selectAll().map { it.toUser() }
+            Users.select { Users.id eq id }.querySingle()
         }
     }
 
     suspend fun getUserByName(name: String): User? = dbCall {
-        Users.select { Users.name eq name }
-            .limit(1)
-            .singleOrNull()
-            ?.toUser()
+        Users.select { Users.name eq name }.querySingle()
     }
 
     suspend fun createUser(id: String, name: String, profileUrl: String): User? {
@@ -34,7 +32,7 @@ class UserRepository(database: Database) : BaseRepository(database) {
                 it[Users.id] = id
                 it[Users.name] = name
                 it[profileImageUrl] = profileUrl
-            }.resultedValues?.singleOrNull()?.toUser()
+            }.inserted()
         }
     }
 
@@ -44,9 +42,7 @@ class UserRepository(database: Database) : BaseRepository(database) {
                 it[Users.name] = name
                 it[profileImageUrl] = profileUrl
             }
-            Users.select { Users.id eq id }
-                .singleOrNull()
-                ?.toUser()
+            Users.select { Users.id eq id }.querySingle()
         }
     }
 }

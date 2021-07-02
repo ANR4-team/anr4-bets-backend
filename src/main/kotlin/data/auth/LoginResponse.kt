@@ -1,12 +1,10 @@
 package data.auth
 
-data class LoginResponse(
-    val token: String,
-) {
+import annotations.SampleModel
+import annotations.StringField
 
-    companion object {
-        fun example(): Map<String, Any> = mapOf(
-            "token" to "dn2n9nsadn91n9n9sandnas",
-        )
-    }
-}
+@SampleModel
+data class LoginResponse(
+    @StringField("dn2n9nsadn91n9n9sandnas")
+    val token: String,
+)

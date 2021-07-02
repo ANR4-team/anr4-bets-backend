@@ -1,34 +1,32 @@
 package repository
 
 import data.SportType
-import data.toSportType
 import db.SportTypes
 import org.jetbrains.exposed.sql.*
 import java.util.*
 
-class SportTypeRepository(database: Database) : BaseRepository(database) {
+class SportTypeRepository(database: Database) : ExposedRepository<SportTypes, SportType>(database) {
 
-    suspend fun getAllTypes(): List<SportType> {
-        return dbCall {
-            SportTypes.selectAll().map { it.toSportType() }
-        } ?: emptyList()
+    override val table = SportTypes
+
+    override fun ResultRow.convert(): SportType {
+        return SportType(
+            this[SportTypes.id],
+            this[SportTypes.name],
+        )
     }
 
     suspend fun getTypeById(id: UUID): SportType? {
         return dbCall {
             SportTypes.select { SportTypes.id eq id }
-                .limit(1)
-                .singleOrNull()
-                ?.toSportType()
+                .querySingle()
         }
     }
 
     suspend fun getTypeByName(name: String): SportType? {
         return dbCall {
             SportTypes.select { SportTypes.name eq name }
-                .limit(1)
-                .singleOrNull()
-                ?.toSportType()
+                .querySingle()
         }
     }
     
@@ -36,7 +34,7 @@ class SportTypeRepository(database: Database) : BaseRepository(database) {
         return dbCall {
             SportTypes.insert {
                 it[SportTypes.name] = name
-            }.resultedValues?.singleOrNull()?.toSportType()
+            }.inserted()
         }
     }
 
@@ -45,10 +43,7 @@ class SportTypeRepository(database: Database) : BaseRepository(database) {
             SportTypes.update({ SportTypes.id eq id }) {
                 it[name] = newName
             }
-            SportTypes.select { SportTypes.id eq id }
-                .limit(1)
-                .singleOrNull()
-                ?.toSportType()
+            SportTypes.select { SportTypes.id eq id }.querySingle()
         }
     }
 
