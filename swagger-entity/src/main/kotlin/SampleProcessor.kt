@@ -73,7 +73,6 @@ class SampleProcessor : AbstractProcessor() {
                     )
                 }
                 addFunction(annotations.createMapperForModels())
-//                addStaticImport()
                 println(annotations)
             }
             .build()

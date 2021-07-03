@@ -1,5 +1,6 @@
 package data
 
+import annotations.CustomField
 import annotations.IntField
 import annotations.SampleModel
 import annotations.StringField
@@ -12,4 +13,6 @@ data class Participant(
     val name: String,
     @StringField("https://example.com/logo/123.png")
     val logoUrl: String,
+    @CustomField(SportType::class)
+    val sportType: SportType,
 )

@@ -41,7 +41,7 @@ fun Routing.sportTypesRoutes() {
                 )
         ) { _, (name), _ -> call.respondService(sportTypeService.createSportType(name)) }
 
-        put<Routes.SportType.WithId, SportTypeBody>(
+        put<Routes.SportTypeWithId, SportTypeBody>(
             "Rename sport type"
                 .requestBodyExample<SportTypeBody>()
                 .responds(
@@ -53,7 +53,7 @@ fun Routing.sportTypesRoutes() {
                 )
         ) { route, (name), _ -> call.respondService(sportTypeService.updateSportType(route.id, name)) }
 
-        delete<Routes.SportType.WithId>(
+        delete<Routes.SportTypeWithId>(
             "Delete sport type"
                 .responds(
                     ok<Unit>(),
