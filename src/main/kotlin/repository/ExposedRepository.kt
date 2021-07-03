@@ -22,7 +22,7 @@ abstract class ExposedRepository<E : Table, T>(private val database: Database) {
         }.await()
     }
 
-    suspend fun getAll(): List<T>? {
+    open suspend fun getAll(): List<T>? {
         return dbCall {
             table.selectAll()
                 .map { it.convert() }

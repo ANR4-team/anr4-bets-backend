@@ -23,7 +23,7 @@ class ParticipantRepository(database: Database) : ExposedRepository<Participants
         )
     }
 
-    suspend fun getAllParticipants(): List<Participant>? {
+    override suspend fun getAll(): List<Participant>? {
         return dbCall {
             Participants.leftJoin(SportTypes)
                 .selectAll()

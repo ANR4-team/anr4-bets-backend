@@ -23,7 +23,7 @@ class ParticipantService(
     }
 
     suspend fun getAllParticipants(): ServiceResult<List<Participant>> {
-        return participantRepository.getAllParticipants()?.success()
+        return participantRepository.getAll()?.success()
             ?: Error.Unknown.error()
     }
 

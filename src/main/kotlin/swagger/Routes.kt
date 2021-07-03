@@ -1,6 +1,5 @@
 package swagger
 
-import de.nielsfalk.ktor.swagger.Ignore
 import de.nielsfalk.ktor.swagger.version.shared.Group
 import io.ktor.locations.*
 import java.util.*
@@ -31,4 +30,12 @@ object Routes {
     @Group("participants")
     @Location("/participants/{id}")
     class ParticipantWithId(val id: Int)
+
+    @Group("tournaments")
+    @Location("/tournaments")
+    class Tournaments
+
+    @Group("tournaments")
+    @Location("/tournaments/{id}")
+    class TournamentsWithId(val id: Int)
 }
