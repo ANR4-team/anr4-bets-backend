@@ -11,13 +11,6 @@ class UuidAdapter : JsonSerializer<UUID>, JsonDeserializer<UUID> {
     }
 
     override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): UUID? {
-        return jsonElement.asString.let {
-            try {
-                UUID.fromString(it)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                null
-            }
-        }
+        return jsonElement.asString.let { UUID.fromString(it) }
     }
 }

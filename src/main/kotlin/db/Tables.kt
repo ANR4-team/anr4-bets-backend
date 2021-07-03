@@ -4,4 +4,5 @@ val tables = arrayOf(
     Users,
     SportTypes,
     Participants,
+    Tournaments,
 )

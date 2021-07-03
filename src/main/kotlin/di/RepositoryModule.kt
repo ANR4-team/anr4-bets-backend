@@ -10,4 +10,6 @@ val repositoryModule = module {
     single { SportTypeRepository(database = get()) }
 
     single { ParticipantRepository(database = get()) }
+
+    single { TournamentRepository(database = get()) }
 }

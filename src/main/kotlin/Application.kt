@@ -123,5 +123,6 @@ fun Application.module() {
         userRoutes()
         sportTypesRoutes()
         participantRoutes()
+        tournamentRoutes()
     }
 }
