@@ -21,9 +21,9 @@ fun Routing.userRoutes() {
 
     postNoAuth<Routes.Login, LoginRequestBody>(
         "Login for Google user"
-            .sample<LoginRequestBody>(LoginRequestBody.example())
+            .requestBodyExample<LoginRequestBody>()
             .responds(
-                okWithExample<LoginResponse>(LoginResponse.example()),
+                okWithExample<LoginResponse>(),
                 badRequest(),
             )
     ) { _, body ->
@@ -38,7 +38,7 @@ fun Routing.userRoutes() {
             "Get user info"
                 .noSecurity()
                 .responds(
-                    okWithExample<User>(User.example()),
+                    okWithExample<User>(),
                     unauthorized(),
                 )
         ) { _, user ->

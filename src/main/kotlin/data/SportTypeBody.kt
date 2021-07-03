@@ -1,12 +1,10 @@
 package data
 
-data class SportTypeBody(val name: String) {
+import annotations.SampleModel
+import annotations.StringField
 
-    companion object {
-        fun example(): Map<String, Any> {
-            return mapOf(
-                "name" to "Dota 2"
-            )
-        }
-    }
-}
+@SampleModel
+data class SportTypeBody(
+    @StringField("Dota 2")
+    val name: String,
+)

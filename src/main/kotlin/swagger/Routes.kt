@@ -1,5 +1,6 @@
 package swagger
 
+import de.nielsfalk.ktor.swagger.Ignore
 import de.nielsfalk.ktor.swagger.version.shared.Group
 import io.ktor.locations.*
 import java.util.*
@@ -17,10 +18,17 @@ object Routes {
 
     @Group("sport-types")
     @Location("/sport-types")
-    class SportType {
+    class SportType
 
-        @Group("sport-types")
-        @Location("/sport-types/{id}")
-        data class WithId(val parent: SportType, val id: UUID)
-    }
+    @Group("sport-types")
+    @Location("/sport-types/{id}")
+    class SportTypeWithId(val id: UUID)
+
+    @Group("participants")
+    @Location("/participants")
+    class Participant
+
+    @Group("participants")
+    @Location("/participants/{id}")
+    class ParticipantWithId(val id: Int)
 }

@@ -5,6 +5,7 @@ plugins {
     application
     kotlin("jvm") version Versions.Kotlin
     id("com.github.johnrengelman.shadow") version Versions.ShadowJar
+    kotlin("kapt") version Versions.Kotlin
 }
 
 group = "com.github.anr4-team"
@@ -23,7 +24,8 @@ repositories {
 }
 
 dependencies {
-
+    implementation(project(":swagger-entity"))
+    kapt(project(":swagger-entity"))
     implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", Versions.Kotlin)
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", Versions.Coroutines)
     implementation("ch.qos.logback", "logback-classic", Versions.Logback)

@@ -1,20 +1,15 @@
 package data.auth
 
+import annotations.SampleModel
+import annotations.StringField
 import io.ktor.auth.*
 
+@SampleModel
 data class User(
+    @StringField("228322000")
     val id: String,
+    @StringField("truetripled")
     val name: String,
+    @StringField("https://example.com/pic.png")
     val profileImageUrl: String,
-) : Principal {
-
-    companion object {
-        fun example(): Map<String, Any> {
-            return mapOf(
-                "id" to "228322000",
-                "name" to "truetripled",
-                "profileImageUrl" to "https://example.com/pic.png",
-            )
-        }
-    }
-}
+) : Principal

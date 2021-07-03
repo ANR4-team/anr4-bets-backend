@@ -13,7 +13,7 @@ class SportTypeService(
 ) {
 
     suspend fun getAllSportTypes(): ServiceResult<List<SportType>> {
-        return sportTypeRepository.getAllTypes().success()
+        return sportTypeRepository.getAll()?.success() ?: Error.Unknown.error()
     }
 
     suspend fun createSportType(name: String): ServiceResult<SportType> {
