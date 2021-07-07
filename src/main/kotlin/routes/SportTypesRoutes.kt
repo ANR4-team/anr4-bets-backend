@@ -1,8 +1,6 @@
 package routes
 
 import data.SportType
-import data.SportTypeBody
-import de.nielsfalk.ktor.swagger.ok
 import de.nielsfalk.ktor.swagger.responds
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -10,10 +8,7 @@ import io.ktor.routing.*
 import org.koin.ktor.ext.inject
 import service.SportTypeService
 import swagger.*
-import swagger.methods.delete
 import swagger.methods.get
-import swagger.methods.post
-import swagger.methods.put
 import utils.respondService
 
 fun Routing.sportTypesRoutes() {
@@ -30,37 +25,14 @@ fun Routing.sportTypesRoutes() {
                 )
         ) { _, _ -> call.respondService(sportTypeService.getAllSportTypes()) }
 
-        post<Routes.SportType, SportTypeBody>(
-            "Create new sport type"
-                .requestBodyExample<SportTypeBody>()
-                .responds(
-                    okWithExample<SportType>(),
-                    unauthorized(),
-                    badRequest(),
-                    conflict(),
-                )
-        ) { _, (name), _ -> call.respondService(sportTypeService.createSportType(name)) }
-
-        put<Routes.SportTypeWithId, SportTypeBody>(
-            "Rename sport type"
-                .requestBodyExample<SportTypeBody>()
+        get<Routes.SportTypeWithId>(
+            "Get sport types by id"
                 .responds(
                     okWithExample<SportType>(),
                     unauthorized(),
                     badRequest(),
                     notFound<SportType>(),
-                    conflict(),
                 )
-        ) { route, (name), _ -> call.respondService(sportTypeService.updateSportType(route.id, name)) }
-
-        delete<Routes.SportTypeWithId>(
-            "Delete sport type"
-                .responds(
-                    ok<Unit>(),
-                    unauthorized(),
-                    badRequest(),
-                    notFound<SportType>(),
-                )
-        ) { route, _ -> call.respondService(sportTypeService.deleteSportType(route.id)) }
+        ) { route, _ -> call.respondService(sportTypeService.getSportTypeById(route.id)) }
     }
 }

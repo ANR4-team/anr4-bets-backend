@@ -1,4 +1,6 @@
+import data.StageType
 import data.adapters.LocalDateTimeAdapter
+import data.adapters.StageTypeAdapter
 import data.adapters.UuidAdapter
 import db.tables
 import di.appModule
@@ -98,6 +100,7 @@ fun Application.module() {
         gson {
             registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeAdapter())
             registerTypeAdapter(UUID::class.java, UuidAdapter())
+            registerTypeAdapter(StageType::class.java, StageTypeAdapter())
         }
     }
 
@@ -124,5 +127,6 @@ fun Application.module() {
         sportTypesRoutes()
         participantRoutes()
         tournamentRoutes()
+        stageRoutes()
     }
 }

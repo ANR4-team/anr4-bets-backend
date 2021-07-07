@@ -7,6 +7,8 @@ import io.ktor.http.*
 
 fun String.noSecurity(): Metadata = security(emptyMap())
 
+fun Metadata.noSecurity(): Metadata = copy(requirements = emptyList())
+
 fun badRequest(description: String? = null) = HttpCodeResponse(
     HttpStatusCode.BadRequest,
     emptyList(),
@@ -23,6 +25,12 @@ inline fun <reified T> notFound(entityName: String? = null) = HttpCodeResponse(
     HttpStatusCode.NotFound,
     emptyList(),
     "${entityName ?: T::class.java.simpleName} not found"
+)
+
+fun forbidden(description: String? = null) = HttpCodeResponse(
+    HttpStatusCode.Forbidden,
+    emptyList(),
+    description ?: "User is not allowed to call this method"
 )
 
 fun notAllowed(description: String? = null) = HttpCodeResponse(

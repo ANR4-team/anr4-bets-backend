@@ -12,4 +12,6 @@ val serviceModule = module {
     single { ParticipantService(participantRepository = get(), sportTypeRepository = get()) }
 
     single { TournamentService(tournamentRepository = get(), sportTypeRepository = get()) }
+
+    single { StageService(stageRepository = get(), tournamentRepository = get()) }
 }
