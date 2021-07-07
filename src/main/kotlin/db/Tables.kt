@@ -5,4 +5,5 @@ val tables = arrayOf(
     SportTypes,
     Participants,
     Tournaments,
+    Stages,
 )

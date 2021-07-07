@@ -16,6 +16,10 @@ class SportTypeService(
         return sportTypeRepository.getAll()?.success() ?: Error.Unknown.error()
     }
 
+    suspend fun getSportTypeById(id: UUID): ServiceResult<SportType> {
+        return sportTypeRepository.getTypeById(id)?.success() ?: Error.NotFound("sport type").error()
+    }
+
     suspend fun createSportType(name: String): ServiceResult<SportType> {
         if (sportTypeRepository.getTypeByName(name) != null) {
             return Error.Conflict("sport type").error()

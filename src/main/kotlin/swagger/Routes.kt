@@ -38,4 +38,12 @@ object Routes {
     @Group("tournaments")
     @Location("/tournaments/{id}")
     class TournamentsWithId(val id: Int)
+
+    @Group("tournaments")
+    @Location("/tournaments/{tournamentId}/stages")
+    class Stages(val tournamentId: Int)
+
+    @Group("tournaments")
+    @Location("/tournaments/stages/{id}")
+    class StagesWithId(val id: Int)
 }
